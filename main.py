@@ -579,14 +579,14 @@ class Invoice:
                 break
         return {
             "headers": headers,
-            "invoice": hsl
+            "invoice": hsl[0]
         }
         
     def send_invoice(self, harga):
         create   = self.uploud_file(harga=harga)
         headers  = create['headers']
         hasil    = create["invoice"]
-        email    = str(hasil['email'])
+        email    = hasil['email']
         phone    = hasil['phone']
         inv_uuid = hasil['uuid']
         data = {
