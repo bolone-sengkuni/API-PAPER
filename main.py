@@ -410,7 +410,7 @@ class Patner:
         else:
             hasil = cek__[0]
             hasilku.append(hasil)
-        return hasil[0]
+        return hasilku[0]
 
 
 class Invoice:
