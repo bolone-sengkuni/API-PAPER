@@ -615,7 +615,7 @@ class KodeBayar:
             except:continue
             
         token   = []
-        soup    = BeautifulSoup(body, 'lxml')
+        soup    = BeautifulSoup(body, 'html.parser') #lxml
         
         for l in soup.find_all('a'):
             link = l.get("href")
