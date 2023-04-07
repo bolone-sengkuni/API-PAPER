@@ -20,6 +20,5 @@ $ pip3 install -r requirements.txt
 ### ⇨  Menjalankan Script
 ```
 $ cd /sdcard/API-PAPER
-$ git pull
 $ python main.py
 ```
