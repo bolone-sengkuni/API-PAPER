@@ -571,13 +571,15 @@ class Invoice:
             json=data
         )
         inv = res.json()['invoices']
+        hsl = []
         for x in inv:
             if nama_patner in x['name']:
                 hasil = x
+                hsl.append(hasil)
                 break
         return {
             "headers": headers,
-            "invoice": hasil
+            "invoice": hsl
         }
         
     def send_invoice(self, harga):
