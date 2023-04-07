@@ -1,5 +1,4 @@
 # ✭ PAPER GENERATE CODE
-### Made With By Bolone Sengkuni
 ```
 Author:
 - Bolone Sengkuni
