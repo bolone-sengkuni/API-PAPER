@@ -1,5 +1,5 @@
 # ✭ PAPER GENERATE CODE
-### Made With By Bolone Sengkuni
+
 ```
 Author:
 - Bolone Sengkuni
@@ -21,6 +21,5 @@ $ pip3 install -r requirements.txt
 ### ⇨  Menjalankan Script
 ```
 $ cd /sdcard/API-PAPER
-$ git pull
 $ python main.py
 ```

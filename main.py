@@ -267,7 +267,7 @@ class Patner:
                 json={
                     "number":"0100",
                     "name":"PT. LAKNAT TRALALA",
-                    "email":"alahmboh@gmail.com",
+                    "email": email,
                     "phone":"085785234267",
                     "mobile":"085785234267",
                     "city": "null",
