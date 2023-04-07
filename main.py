@@ -288,8 +288,10 @@ class Patner:
         email = TempekMail().create_email(nama=nama_email)
  
         cek_number = [x['number'] for x in patner if x['number'] == '0100']
+        hasilku = []
         if '[]' == str(cek_number):
             hasil = self.create_patner(email=email)
+            hasilku.append(hasil)
         else:
             pat = self.cek_patner()['patner']
             patz = [x for x in pat if '0100' == x['number']]
@@ -324,7 +326,8 @@ class Patner:
                 json=json__
                 )
             hasil = res.json()
-        return hasil
+            hasilku.append(hasil)
+        return hasilku[0]
 
     def create_product(self):
         data = self.cek_patner()
