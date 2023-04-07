@@ -3,6 +3,7 @@
 ```
 Author:
 - Bolone Sengkuni
+
 ```
 
 ### ⇨  Install Script Di Termux
@@ -22,4 +23,5 @@ $ pip3 install -r requirements.txt
 ```
 $ cd /sdcard/API-PAPER
 $ python main.py
+
 ```
