@@ -1,13 +1,13 @@
 import requests, json, random, string, os, base64, time
 from pydash import omit
 from datetime import datetime
-import pandas as pd
 from requests_toolbelt import MultipartEncoder
 from bs4 import BeautifulSoup
 from rich import print as printer
 from rich.panel import Panel
 from rich.align import Align
-
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
 
 
 DIR = os.path.dirname(os.path.abspath(__file__))
@@ -417,8 +417,8 @@ class Invoice:
         self.headers = self.file['headers']
     
     def uploud_file(self, harga):
-        if os.path.exists(f'{DIR}/data/paper.xlsx'):
-            os.remove(f'{DIR}/data/paper.xlsx')
+        #if os.path.exists(f'{DIR}/data/paper.xlsx'):
+        #    os.remove(f'{DIR}/data/paper.xlsx')
         
         now            = datetime.now()
         tanggal        = now.strftime("%d/%m/%Y")
@@ -429,16 +429,48 @@ class Invoice:
         nomer_hp       = patner['phone']
         
 
-        df = pd.DataFrame([[nama_patner, nomer_hp, email_patner, no_invoce, tanggal, tanggal, '',
-                            'SKU5000','GEDANG GORENG','Produk sangat kenyal', '1', harga, 0, '', 0, '', '', '']]
-                  ,columns=['*Client Name', '*Partner Telephone Number', 'Email',
-                            '*No. Invoice', '*Date', '*Due Date', 'Salesperson',
-                            'Product SKU', '*Item Name', '*Item Description', '*Qty',
-                            '*Price', 'Discount (%) per Line', 'Nama Pajak', 'Diskon Total',
-                            'Syarat dan Ketentuan', 'Keterangan', 'Biaya Ongkir'])
-        df.to_excel(f'{DIR}/data/paper.xlsx', sheet_name='format_bulk', index=False)
-
+        #df = pd.DataFrame([[nama_patner, nomer_hp, email_patner, no_invoce, tanggal, tanggal, '',
+        #                    'SKU5000','GEDANG GORENG','Produk sangat kenyal', '1', harga, 0, '', 0, '', '', '']]
+        #          ,columns=['*Client Name', '*Partner Telephone Number', 'Email',
+        #                    '*No. Invoice', '*Date', '*Due Date', 'Salesperson',
+        #                    'Product SKU', '*Item Name', '*Item Description', '*Qty',
+        #                    '*Price', 'Discount (%) per Line', 'Nama Pajak', 'Diskon Total',
+        #                    'Syarat dan Ketentuan', 'Keterangan', 'Biaya Ongkir'])
+        #df.to_excel(f'{DIR}/data/paper.xlsx', sheet_name='format_bulk', index=False)
         
+        scope = ['https://spreadsheets.google.com/feeds',
+         'https://www.googleapis.com/auth/spreadsheets',
+         'https://www.googleapis.com/auth/drive.file',
+         'https://www.googleapis.com/auth/drive']
+        
+        credentials = ServiceAccountCredentials.from_json_keyfile_name(f'{DIR}/data/api_sheet.json', scope)
+
+        gc = gspread.authorize(credentials)
+        sheet = gc.open('paper').sheet1
+
+
+        sheet.update('A2', nama_patner)
+        sheet.update('B2', nomer_hp)
+        sheet.update('C2', email_patner)
+        sheet.update('D2', no_invoce)
+        sheet.update('E2', tanggal)
+        sheet.update('F2', tanggal)
+        sheet.update('H2', 'SKU5000')
+        sheet.update('I2', 'GEDANG GORENG')
+        sheet.update('J2', 'Produk sangat kenyal')
+        sheet.update('K2', 1)
+        sheet.update('L2', harga)
+
+
+        spreadsheet_id = "1YfAOnSGVpW2SDRvL98r0ad_TJFnEcbcOO426O3jsTM8"
+        access_token = credentials.create_delegated(credentials._service_account_email).get_access_token().access_token
+        url = "https://www.googleapis.com/drive/v3/files/" + spreadsheet_id + "/export?mimeType=application%2Fvnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        res = requests.get(url, headers={"Authorization": "Bearer " + access_token})
+
+        with open(f"{DIR}/data/paper.xlsx", 'wb') as f:
+            f.write(res.content)        
+
+
         # UPLOUD FILE XLSX
         fields = {
             "Content-Disposition": "form-data",
@@ -692,8 +724,6 @@ class Menu:
         clear_layar()
         if os.path.exists(f'kode.txt'):
             os.remove('kode.txt')
-        if not os.path.exists('data'):
-            os.makedirs('data')
         if not os.path.exists(f'{DIR}/data/auth.json'):
             sts = Align.center(f"{P2}LOGIN PAPER")
             printer(Panel(sts,width=54,style="#FF8F00", subtitle=f"{P2}• {M2}{P2} •", subtitle_align="center"))
