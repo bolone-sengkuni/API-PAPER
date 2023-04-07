@@ -586,7 +586,7 @@ class Invoice:
         create   = self.uploud_file(harga=harga)
         headers  = create['headers']
         hasil    = create["invoice"]
-        email    = hasil['email']
+        email    = hasil['email'][0]
         phone    = hasil['phone']
         inv_uuid = hasil['uuid']
         data = {
