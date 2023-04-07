@@ -5,7 +5,6 @@ Author:
 - Bolone Sengkuni
 
 ```
-
 ### ⇨  Install Script Di Termux
 ```
 $ apt update && apt upgrade
