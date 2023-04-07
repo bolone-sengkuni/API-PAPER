@@ -738,13 +738,16 @@ class Menu:
         clear_layar()
         jum = 0
         datak = []
+        
+        sts     = Align.center(f"{J2} • {P2}KODE PAPER {J2}•")
+        printer(Panel(sts,width=54,style="#FF8F00"))
         for _ in range(int(gawe)):
             jum+=1
             info    = KodeBayar(harga=harga).get_kode()
             link    = info['link']
             kodeb   = info['kode']
             sts     = Align.left(f"{J2} • {P2}Link{J2} • {P2}{link}\n{J2} • {P2}Kode{J2} • {P2}{kodeb}")
-            printer(Panel(sts,width=40,style="#FF8F00", title=f"[{P2} {str(jum).zfill(2)}{J2} ]", title_align="left", padding=(1, 2)))
+            printer(Panel(sts,width=54,style="#FF8F00", title=f"[{J2} {str(jum).zfill(2)}{A2} ]", title_align="left", padding=(1, 2)))
             with open('kode.txt', 'a') as f:
                 f.write(f'{kodeb} | {link}\n')
        
