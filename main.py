@@ -400,14 +400,17 @@ class Patner:
                 "sortField":"category_name"
                 }
         )
+        hasilku = []
         datax = res.json()
         data  = datax['products']
         cek__ = [pro for pro in data if 'SKU5000' in pro['code']]
         if '[]' in str(cek__):
             hasil = self.create_product()
+            hasilku.append(hasil)
         else:
             hasil = cek__[0]
-        return hasil
+            hasilku.append(hasil)
+        return hasil[0]
 
 
 class Invoice:
